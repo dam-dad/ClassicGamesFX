@@ -8,8 +8,8 @@
 	<artifactId>ClassicGamesFX</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>DosGamesFX</name>
-	<description>DOS Games emulator in JavaFX</description>
+	<name>ClassicGamesFX</name>
+	<description>MS-DOS Games launcher in JavaFX</description>
 
 	<build>
 		<plugins>

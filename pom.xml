@@ -1,12 +1,39 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	
-	<groupId>io.github.fvarrui</groupId>
-	<artifactId>DosGamesFX</artifactId>
+
+	<groupId>dad</groupId>
+	<artifactId>ClassicGamesFX</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<name>DosGamesFX</name>
 	<description>DOS Games emulator in JavaFX</description>
-	
+
+	<build>
+		<plugins>
+			<!-- downloads and unpack DOSBox into the project's root dir -->
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>download-maven-plugin</artifactId>
+				<version>1.6.8</version>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://github.com/dam-dad/ClassicGamesFX/releases/download/dosbox/DOSBox-0.74-win_x64.zip</url>
+							<outputFileName>DOSBox.zip</outputFileName>
+							<outputDirectory>${basedir}</outputDirectory>
+							<unpack>true</unpack>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

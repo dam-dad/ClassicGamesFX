@@ -1,4 +1,4 @@
-package io.github.fvarrui.dosgames;
+package dad.classicgames.emulator;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,7 +1,10 @@
-package io.github.fvarrui.dosgames;
+package dad.classicgames;
 
 import java.io.File;
 import java.io.IOException;
+
+import dad.classicgames.emulator.DOSBox;
+import dad.classicgames.emulator.Emulator;
 
 public class Main {
 
@@ -12,11 +15,9 @@ public class Main {
 		File appDir = new File(rootDir, ".ClassicGamesFX");
 		File gamesDir = new File(appDir, "games");
 		File exeFile = new File(gamesDir, "4-In-A-Row_DOS_EN/4INAROW.EXE");
-//		File exeFile = new File(gamesDir, "Sid_Meiers_Civilization/CIV.EXE");
 		
-		DOSBox dosbox = new DOSBox();
-		Process process = dosbox.run(exeFile);
-		process.waitFor();
+		Emulator emulator = new DOSBox();
+		emulator.run(exeFile).waitFor();
 		
 		System.out.println("Finish!");
 		

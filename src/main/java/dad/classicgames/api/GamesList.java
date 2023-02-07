@@ -1,4 +1,4 @@
-package dad.classicgames;
+package dad.classicgames.api;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,9 +10,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class ListaJuegos {
-	public static ArrayList<Titulos> ObtenerListaJuegos() {
-		ArrayList<Titulos> titulos = new ArrayList<Titulos>();
+import dad.classicgames.api.model.Item;
+
+public class GamesList {
+	
+	public static ArrayList<Item> getGamesList() {
+		ArrayList<Item> titulos = new ArrayList<Item>();
 		try {
 			// creamos una URL donde esta nuestro webservice
 			URL url = new URL(
@@ -43,7 +46,7 @@ public class ListaJuegos {
 				if (!itemparser.get("identifier").getAsString().equals("Doom-2")) {
 					String title = itemparser.get("title").getAsString();
 					String identifier = itemparser.get("identifier").getAsString();
-					Titulos titulo = new Titulos(title, identifier);
+					Item titulo = new Item(title, identifier);
 					titulos.add(titulo);
 				}
 			}

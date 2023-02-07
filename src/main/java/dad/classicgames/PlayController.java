@@ -2,6 +2,9 @@ package dad.classicgames;
 
 import java.io.IOException;
 import java.util.Optional;
+
+import dad.classicgames.api.DownloadGames;
+import dad.classicgames.api.model.Item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +15,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 
 public class PlayController {
-	Titulos titulo;
+	Item titulo;
 
 	@FXML
 	private Button buttonJugar;
@@ -41,10 +44,10 @@ public class PlayController {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		try {
-			String emuexec = DescagaJuegos.Peticion(titulo);
-			DescagaJuegos.unzipAndExecute(DescagaJuegos.download("https://archive.org/download/"
-					+ titulo.getIdentifier() + "/" + DescagaJuegos.obtenerNombreZip(emuexec)),
-					DescagaJuegos.ObtenerEmuExec(emuexec));
+			String emuexec = DownloadGames.Peticion(titulo);
+			DownloadGames.unzipAndExecute(DownloadGames.download("https://archive.org/download/"
+					+ titulo.getIdentifier() + "/" + DownloadGames.obtenerNombreZip(emuexec)),
+					DownloadGames.ObtenerEmuExec(emuexec));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,7 +58,7 @@ public class PlayController {
 		return playView;
 	}
 
-	public void setDatos(Titulos nv) {
+	public void setDatos(Item nv) {
 		this.titulo = nv;
 	}
 

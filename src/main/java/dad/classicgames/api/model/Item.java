@@ -1,12 +1,15 @@
-package dad.classicgames;
+package dad.classicgames.api.model;
 
-public class Titulos {
+public class Item {
+	
 	private String identifier;
 	private String title;
-	public Titulos(String tit,String id) {
-		this.title=tit;
-		this.identifier=id;
+
+	public Item(String title, String identifier) {
+		this.title = title;
+		this.identifier = identifier;
 	}
+
 	public String getIdentifier() {
 		return identifier;
 	}
@@ -22,8 +25,10 @@ public class Titulos {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	@Override
 	public String toString() {
-	return "el juego "+title+" con identificador "+identifier+"\n";
+		return "Game " + title + " with ID " + identifier;
 	}
+	
 }

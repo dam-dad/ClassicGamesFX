@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import dad.classicgames.api.GamesList;
+import dad.classicgames.api.model.Item;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,10 +26,10 @@ public class RootController implements Initializable {
 	private PlayController PlayController = new PlayController();
 
 	@FXML
-	private TableView<Titulos> Tablajuegos;
+	private TableView<Item> Tablajuegos;
 
 	@FXML
-	private TableColumn<Titulos, String> Columnanombre;
+	private TableColumn<Item, String> Columnanombre;
 	@FXML
 	private BorderPane juegoBorderPane;
 	@FXML
@@ -49,9 +51,9 @@ public class RootController implements Initializable {
 		}
 	}
 
-	ObservableList<Titulos> getTitulos() {
-		ObservableList<Titulos> titulos = FXCollections.observableArrayList();
-		titulos.addAll(ListaJuegos.ObtenerListaJuegos());
+	ObservableList<Item> getTitulos() {
+		ObservableList<Item> titulos = FXCollections.observableArrayList();
+		titulos.addAll(GamesList.getGamesList());
 		return titulos;
 
 	}
@@ -66,7 +68,7 @@ public class RootController implements Initializable {
 		Tablajuegos.setItems(getTitulos());
 	}
 
-	private void onSelectedItem(ObservableValue<? extends Titulos> o, Titulos ov, Titulos nv) {
+	private void onSelectedItem(ObservableValue<? extends Item> o, Item ov, Item nv) {
 
 		if (nv != null) {
 

@@ -1,4 +1,4 @@
-package dad.classicgames;
+package dad.classicgames.api;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,11 +15,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import dad.classicgames.api.model.Item;
 import dad.classicgames.emulator.DOSBox;
 import dad.classicgames.emulator.Emulator;
 import net.lingala.zip4j.ZipFile;
 
-public class DescagaJuegos {
+public class DownloadGames {
 	public static File ROOT_DIR = new File("."); // new File(System.getProperty("user.home"));
 	public static File APP_DIR = new File(ROOT_DIR, ".ClassicGamesFX");
 	public static File GAMES_DIR = new File(APP_DIR, "games");
@@ -56,7 +57,7 @@ public class DescagaJuegos {
 		return emuStart;
 	}
 
-	public static String Peticion(Titulos titulo) {
+	public static String Peticion(Item titulo) {
 		String output = "";
 		try {
 			URL url = new URL("https://archive.org/metadata/" + titulo.getIdentifier());

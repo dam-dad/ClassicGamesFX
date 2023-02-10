@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import dad.classicgames.api.GamesList;
+import dad.classicgames.api.ArchiveOrg;
 import dad.classicgames.api.model.Item;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -39,7 +39,7 @@ public class RootController implements Initializable {
 
 	@FXML
 	private SplitPane view;
-
+	private ArchiveOrg archive = new ArchiveOrg();
 	public RootController() {
 		// cargamos la vista desde el fichero FXML
 		try {
@@ -53,7 +53,12 @@ public class RootController implements Initializable {
 
 	ObservableList<Item> getTitulos() {
 		ObservableList<Item> titulos = FXCollections.observableArrayList();
-		titulos.addAll(GamesList.getGamesList());
+		try {
+			titulos.addAll(archive.getGames());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return titulos;
 
 	}

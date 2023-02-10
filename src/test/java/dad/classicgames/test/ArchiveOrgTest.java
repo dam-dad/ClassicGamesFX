@@ -8,8 +8,6 @@ import java.util.List;
 import dad.classicgames.api.ArchiveOrg;
 import dad.classicgames.api.DownloadGames;
 import dad.classicgames.api.model.File;
-import dad.classicgames.api.model.Item;
-import dad.classicgames.api.model.ItemMetadata;
 
 public class ArchiveOrgTest {
 

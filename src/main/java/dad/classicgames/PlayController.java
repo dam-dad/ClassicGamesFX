@@ -1,9 +1,13 @@
 package dad.classicgames;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import dad.classicgames.api.ArchiveOrg;
 import dad.classicgames.api.DownloadGames;
+import dad.classicgames.api.model.File;
 import dad.classicgames.api.model.Item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +19,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 
 public class PlayController {
-	Item titulo;
+	private Item titulo;
+	private ArchiveOrg archive = new ArchiveOrg();
 
 	@FXML
 	private Button buttonJugar;
@@ -44,10 +49,19 @@ public class PlayController {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		try {
-			String emuexec = DownloadGames.Peticion(titulo);
-			DownloadGames.unzipAndExecute(DownloadGames.download("https://archive.org/download/"
-					+ titulo.getIdentifier() + "/" + DownloadGames.obtenerNombreZip(emuexec)),
-					DownloadGames.ObtenerEmuExec(emuexec));
+			String zipname = null;
+			String emuexec = archive.getItemMetadata(titulo.getIdentifier()).getMetadata().getEmulatorStart();
+			List<File> files = new ArrayList<File>();
+			files.addAll(archive.getItemMetadata(titulo.getIdentifier()).getFiles());
+			for (File file : files) {
+				if (file.getFormat().contains("ZIP"))
+					zipname = file.getName();
+			}
+
+			java.io.File downloaded = DownloadGames
+					.download("https://archive.org/download/" + titulo.getIdentifier() + "/" + zipname);
+			java.io.File gamedir = DownloadGames.unzip(downloaded);
+			DownloadGames.execute(gamedir, emuexec);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

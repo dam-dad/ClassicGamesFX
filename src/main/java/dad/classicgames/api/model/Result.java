@@ -7,6 +7,7 @@ public class Result {
 	private List<Item> items;
 	private Integer count;
 	private String cursor;
+	private String previous;
 	private Integer total;
 
 	public List<Item> getItems() {
@@ -39,6 +40,14 @@ public class Result {
 
 	public void setTotal(Integer total) {
 		this.total = total;
+	}
+
+	public String getPrevious() {
+		return previous;
+	}
+
+	public void setPrevious(String previous) {
+		this.previous = previous;
 	}
 
 }

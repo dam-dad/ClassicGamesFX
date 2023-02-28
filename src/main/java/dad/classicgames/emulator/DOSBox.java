@@ -11,8 +11,9 @@ public class DOSBox extends Emulator {
 
 	@Override
 	public Process run(File exeFile) throws IOException {
-		ProcessBuilder builder = new ProcessBuilder().command(getExecutable().getAbsolutePath(), exeFile.getAbsolutePath(), "-fullscreen", "-noconsole", "-exit");
+		ProcessBuilder builder = new ProcessBuilder().command(getExecutable().getAbsolutePath(), exeFile.getAbsolutePath(),  "-noconsole", "-exit");
 		return builder.start();
+//		"-fullscreen",
 	}
 
 }

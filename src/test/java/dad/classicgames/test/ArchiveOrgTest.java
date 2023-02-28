@@ -7,7 +7,7 @@ import java.util.List;
 
 import dad.classicgames.api.ArchiveOrg;
 import dad.classicgames.api.DownloadGames;
-import dad.classicgames.api.model.File;
+import dad.classicgames.api.model.Files;
 
 public class ArchiveOrgTest {
 
@@ -31,10 +31,10 @@ public class ArchiveOrgTest {
 //		}
 
 		ArchiveOrg archive = new ArchiveOrg();
-		List<File> files = new ArrayList<File>();
+		List<Files> files = new ArrayList<Files>();
 		files.addAll(archive.getItemMetadata("doom-play").getFiles());
 		System.out.println(files);
-	for (File file : files) {
+	for (Files file : files) {
 		if (file.getFormat().contains("ZIP")) {
 			java.io.File gamefile = DownloadGames.download("https://archive.org/download/"+archive.getItemMetadata("doom-play").getMetadata().getIdentifier()+"/"+file.getName()); 
 			java.io.File gamedir= DownloadGames.unzip(gamefile);

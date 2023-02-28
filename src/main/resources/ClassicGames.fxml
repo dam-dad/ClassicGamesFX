@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane fx:id="root" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TabPane fx:id="tabpane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab fx:id="tabjuegos" text="Juegos">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <ListView fx:id="GameList" BorderPane.alignment="CENTER" />
+                     </center>
+                     <bottom>
+                        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button fx:id="previous" mnemonicParsing="false" onAction="#loadprevious" text="&lt;" />
+                              <Button fx:id="next" mnemonicParsing="false" onAction="#loadnexts" text="&gt;" />
+                           </children>
+                        </HBox>
+                     </bottom>
+                     <right>
+                        <BorderPane fx:id="borderpane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <center>
+                              <Label fx:id="noselectedlabel" text="Label" BorderPane.alignment="CENTER" />
+                           </center>
+                        </BorderPane>
+                     </right>
+                  </BorderPane>
+               </content>
+          </Tab>
+          <Tab fx:id="tabiblio" text="Biblioteca">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <top>
+      <MenuBar fx:id="menu" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu fx:id="Classicmenu" mnemonicParsing="false" text="ClassicGames">
+            <items>
+              <MenuItem fx:id="closemenu" mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Opciones">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="AcercaDe">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

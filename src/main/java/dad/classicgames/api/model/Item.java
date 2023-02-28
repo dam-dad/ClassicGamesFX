@@ -4,13 +4,7 @@ public class Item {
 
 	private String identifier;
 	private String title;
-	private Boolean Installed;
-
-	public Item(String title, String identifier) {
-		this.title = title;
-		this.identifier = identifier;
-		this.Installed=false;
-	}
+	private String logo;
 
 	public String getIdentifier() {
 		return identifier;
@@ -28,17 +22,17 @@ public class Item {
 		this.title = title;
 	}
 
-	public Boolean getInstalled() {
-		return Installed;
+	public String getLogo() {
+		return logo;
 	}
 
-	public void setInstalled(Boolean installed) {
-		Installed = installed;
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 
 	@Override
 	public String toString() {
-		return "Game " + title + " with ID " + identifier;
+		return "Item [identifier=" + identifier + ", title=" + title + ", logo=" + logo + "]";
 	}
 
 }

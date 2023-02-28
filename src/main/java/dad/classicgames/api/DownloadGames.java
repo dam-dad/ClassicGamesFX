@@ -7,6 +7,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import dad.classicgames.emulator.DOSBox;
 import dad.classicgames.emulator.Emulator;
+import javafx.stage.FileChooser;
 import net.lingala.zip4j.ZipFile;
 
 public class DownloadGames {
@@ -15,10 +16,15 @@ public class DownloadGames {
 	public static File GAMES_DIR = new File(APP_DIR, "games");
 
 	public static File download(String urlString) throws Exception {
+		File gameDir;
 		URL url = new URL(urlString);
 		String filename = url.getFile();
+		System.out.println(filename);
 		File downloadedFile = new File(System.getProperty("java.io.tmpdir"), filename);
-		FileUtils.copyURLToFile(url, downloadedFile);
+		gameDir= new File(GAMES_DIR, FilenameUtils.getBaseName(downloadedFile.getName()));
+		if (!gameDir.exists()) {
+			FileUtils.copyURLToFile(url, downloadedFile);
+		}
 		return downloadedFile;
 	}
 
@@ -38,19 +44,37 @@ public class DownloadGames {
 		return gameDir;
 	}
 
-	public static void execute(File gameDir, String emuexec) {
-
-		File exeFile = new File(gameDir, emuexec);
-		System.out.println("runningGame " + exeFile + "!");
+	public static void execute(File gamedir, String emuexec) {
 		Emulator emulator = new DOSBox();
-		try {
-			emulator.run(exeFile).waitFor();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (emuexec.contains("*.exe") || emuexec.contains("*.bat")) {
+			File exeFile = new File(gamedir, emuexec);
+			System.out.println("runningGame " + exeFile + "!");
+			try {
+				emulator.run(exeFile).waitFor();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Executing!");
+		} else {
+			FileChooser chooser = new FileChooser();
+			chooser.setTitle("Load source from file");
+			chooser.setInitialDirectory(gamedir);
+			File chosen = chooser.showOpenDialog(null);
+			if (chosen != null) {
+				System.out.println(chosen.getName());
+				File exeFile = new File(gamedir, chosen.getName());
+				System.out.println(exeFile);
+				try {
+					emulator.run(exeFile).waitFor();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		System.out.println("Executing!");
-	}
 
+	}
 }

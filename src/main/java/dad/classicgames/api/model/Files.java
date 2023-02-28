@@ -4,7 +4,7 @@ package dad.classicgames.api.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class File {
+public class Files {
 
 	@SerializedName("name")
 	@Expose
@@ -50,11 +50,6 @@ public class File {
 
 	public void setFormat(String format) {
 		this.format = format;
-	}
-
-	@Override
-	public String toString() {
-		return "File [name=" + name + ", source=" + source + ", size=" + size + ", format=" + format + "]\n";
 	}
 
 }

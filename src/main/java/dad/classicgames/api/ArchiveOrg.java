@@ -1,8 +1,5 @@
 package dad.classicgames.api;
 
-import java.util.List;
-
-import dad.classicgames.api.model.Item;
 import dad.classicgames.api.model.ItemMetadata;
 import dad.classicgames.api.model.Result;
 import retrofit2.Response;
@@ -28,11 +25,12 @@ public class ArchiveOrg {
 		}
 	}
 
-	public List<Item> getGames() throws Exception {
-		Response<Result> response = api.scrape("title", "softwarelibrary_msdos_games").execute();
+	public Response<Result> getGames(String count,String cursor) throws Exception {
+		Response<Result> response = api.scrape("title", count,cursor, "softwarelibrary_msdos_games").execute();
 		assertResponse(response);
-		return response.body().getItems();
+		return response;
 	}
+	
 
 	public ItemMetadata getItemMetadata(String id) throws Exception {
 		Response<ItemMetadata> response = api.getMetadata(id).execute();

@@ -9,7 +9,7 @@ public class ItemMetadata {
 
 	@SerializedName("files")
 	@Expose
-	private List<File> files;
+	private List<Files> files;
 
 	@SerializedName("metadata")
 	@Expose
@@ -19,11 +19,11 @@ public class ItemMetadata {
 	@Expose
 	private List<Review> reviews;
 
-	public List<File> getFiles() {
+	public List<Files> getFiles() {
 		return files;
 	}
 
-	public void setFiles(List<File> files) {
+	public void setFiles(List<Files> files) {
 		this.files = files;
 	}
 

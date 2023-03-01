@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="VBox" alignment="CENTER_LEFT" maxHeight="225.0" minHeight="225.0" prefHeight="225.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ImageView fx:id="logoGame" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="titleGame" text="Label" />
-   </children>
-</VBox>
+<BorderPane fx:id="Componente" prefHeight="292.0" prefWidth="541.0" styleClass="root" stylesheets="@css/Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <VBox fx:id="VBox" alignment="CENTER" styleClass="root" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="logoGame" fitHeight="220.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <HBox spacing="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="titleGame" styleClass="Label" text="Label" />
+            <Label fx:id="date" styleClass="Label" text="Label" />
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <Button fx:id="playButton" mnemonicParsing="false" onAction="#OnPlayAction" text="Jugar" BorderPane.alignment="CENTER">
+         <styleClass>
+            <String fx:value="button" />
+            <String fx:value="button" />
+         </styleClass>
+      </Button>
+   </bottom>
+</BorderPane>

@@ -3,14 +3,10 @@ package dad.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import dad.classicgames.api.ArchiveOrg;
-import dad.classicgames.api.model.Files;
 import dad.classicgames.api.model.Item;
-import dad.classicgames.api.model.ItemMetadata;
-import dad.classicgames.api.model.Metadata;
 import dad.classicgames.api.model.Result;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,7 +17,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -29,8 +24,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Callback;
-import dad.classicgames.api.model.Result;
 import retrofit2.Response;
 
 public class ClassicGamesController implements Initializable {
@@ -70,9 +63,10 @@ public class ClassicGamesController implements Initializable {
 	private Label noselectedlabel;
 
 	private PlayController PlayController;
-	private String previouscursor = null;
 	public String NextCursor = null;
 	private final String COUNT = "100";
+	private ArrayList<String> page = new ArrayList<String>();
+	private int pageCounter = 0;
 
 	private ArchiveOrg archive = new ArchiveOrg();
 
@@ -94,12 +88,12 @@ public class ClassicGamesController implements Initializable {
 	ObservableList<Item> getpreviousItems() {
 		ObservableList<Item> titulos = FXCollections.observableArrayList();
 		try {
-			Response<Result> response = archive.getGames(this.COUNT, this.previouscursor);
+			pageCounter--;
+			if (pageCounter == 0)
+				previous.setVisible(false);
+			Response<Result> response = archive.getGames(this.COUNT, page.get(pageCounter));
 			titulos.addAll(response.body().getItems());
-			this.previouscursor = response.body().getPrevious();
-			System.out.println(this.previouscursor);
-			this.NextCursor = response.body().getCursor();
-			System.out.println(this.NextCursor);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -111,16 +105,16 @@ public class ClassicGamesController implements Initializable {
 	ObservableList<Item> getnextItems() {
 		ObservableList<Item> titulos = FXCollections.observableArrayList();
 		try {
-			Response<Result> response = archive.getGames(this.COUNT, this.NextCursor);
+			if (pageCounter == 0) {
+				previous.setVisible(true);
+			}
+			Response<Result> response = archive.getGames(this.COUNT, page.get(pageCounter));
 			titulos.addAll(response.body().getItems());
-			this.previouscursor = response.body().getPrevious();
-			System.out.println(this.previouscursor);
-			this.NextCursor = response.body().getCursor();
-			System.out.println(this.NextCursor);
+			page.add(response.body().getCursor());
+			pageCounter++;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(titulos.size());
 		return titulos;
 
 	}
@@ -135,28 +129,14 @@ public class ClassicGamesController implements Initializable {
 		GameList.setItems(getpreviousItems());
 	}
 
-	private void onSelectedItem(ObservableValue<? extends Item> o, Item ov, Item nv) {
 
-		if (nv != null) {
-
-			PlayController = new PlayController();
-			PlayController.setDatos(nv);
-			borderpane.setTop(PlayController.getview());
-			noselectedlabel.setVisible(false);
-
-		} else {
-
-			borderpane.setTop(null);
-			noselectedlabel.setVisible(true);
-
-		}
-
-	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
-			GameList.getSelectionModel().selectedItemProperty().addListener(this::onSelectedItem);
+			
+			page.add(null);
+			previous.setVisible(false);
 			GameList.setItems(getnextItems());
 			GameList.setCellFactory(GameListView -> new ListCellController());
 		} catch (Exception e) {

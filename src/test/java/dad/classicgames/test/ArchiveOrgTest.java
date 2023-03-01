@@ -1,13 +1,11 @@
 package dad.classicgames.test;
 
 import java.util.ArrayList;
-import java.util.List;
-
 //import org.jsoup.Jsoup; import ParseHtmlToText
-
 import dad.classicgames.api.ArchiveOrg;
-import dad.classicgames.api.DownloadGames;
-import dad.classicgames.api.model.Files;
+import dad.classicgames.api.model.Item;
+import dad.classicgames.api.model.Result;
+import retrofit2.Response;
 
 public class ArchiveOrgTest {
 
@@ -31,16 +29,14 @@ public class ArchiveOrgTest {
 //		}
 
 		ArchiveOrg archive = new ArchiveOrg();
-		List<Files> files = new ArrayList<Files>();
-		files.addAll(archive.getItemMetadata("doom-play").getFiles());
-		System.out.println(files);
-	for (Files file : files) {
-		if (file.getFormat().contains("ZIP")) {
-			java.io.File gamefile = DownloadGames.download("https://archive.org/download/"+archive.getItemMetadata("doom-play").getMetadata().getIdentifier()+"/"+file.getName()); 
-			java.io.File gamedir= DownloadGames.unzip(gamefile);
-			DownloadGames.execute(gamedir, archive.getItemMetadata("doom-play").getMetadata().getEmulatorStart());
+		
+		ArrayList<Item> listajuegos = new ArrayList<Item>();
+		Response<Result> response = archive.getGames("100", null);
+		listajuegos.addAll(response.body().getItems());
+		for (Item item : listajuegos) {
+			System.out.println(item);
 		}
-	}
+		
 	}
 
 }

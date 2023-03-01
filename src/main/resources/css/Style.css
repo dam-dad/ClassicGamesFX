@@ -1,0 +1,51 @@
+.Label {
+    -fx-font-size: 11.0pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-opacity: 0.6;
+}
+.button {
+    -fx-padding: 8.0 15.0 15.0 15.0;
+    -fx-background-insets: 0.0,0.0 0.0 5.0 0.0, 0.0 0.0 6.0 0.0, 0.0 0.0 7.0 0.0;
+    -fx-background-radius: 8.0;
+    -fx-background-color: 
+        linear-gradient(from 0.0% 93.0% to 0.0% 100.0%, #a34313 0.0%, #903b12 100.0%),
+        #9d4024,
+        #d86e3a,
+        radial-gradient(center 50.0% 50.0%, radius 100.0%, #d86e3a, #c54e2c);
+    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.75) , 4.0,0.0,0.0,1.0 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+}
+.button:hover{
+	-fx-padding: 8.0 15.0 15.0 15.0;
+    -fx-background-insets: 0.0,0.0 0.0 5.0 0.0, 0.0 0.0 6.0 0.0, 0.0 0.0 7.0 0.0;
+    -fx-background-radius: 8.0;
+    -fx-background-color: 
+        linear-gradient(from 0.0% 93.0% to 0.0% 100.0%, #a34313 0.0%, #903b12 100.0%),
+        #9d4024,
+        #d86e3a,
+        radial-gradient(center 20.0% 50.0%, radius 100.0%, #d86e3a, #c54e2c);
+    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.75) , 4.0,0.0,0.0,1.0 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+}
+.button:pressed{
+	-fx-padding: 8.0 15.0 15.0 15.0;
+    -fx-background-insets: 0.0,0.0 0.0 5.0 0.0, 0.0 0.0 6.0 0.0, 0.0 0.0 7.0 0.0;
+    -fx-background-radius: 8.0;
+    -fx-background-color: 
+        linear-gradient(from 0.0% 93.0% to 0.0% 100.0%, #c5c22c 0.0%, #c5b82c 100.0%),
+        #c5c22c,
+        #c5b82c,
+        radial-gradient(center 10.0% 25.0%, radius 100.0%, #c5c22c, #c5b82c);
+    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.75) , 4.0,0.0,0.0,1.0 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+}
+.root{
+    -fx-background-color:black;
+    -fx-background-position: center center;
+    -fx-background-repeat:repeat-x;
+    -fx-background-size:stretch;
+}

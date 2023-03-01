@@ -100,7 +100,6 @@ public class ClassicGamesController implements Initializable {
 				previous.setVisible(false);
 			Response<Result> response = archive.getGames(this.COUNT, page.get(pageCounter));
 			titulos.addAll(response.body().getItems());
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -119,7 +118,6 @@ public class ClassicGamesController implements Initializable {
 			titulos.addAll(response.body().getItems());
 			page.add(response.body().getCursor());
 			pageCounter++;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -169,15 +167,15 @@ public class ClassicGamesController implements Initializable {
 
 	@FXML
 	void OnClickMosaicView(ActionEvent event) {
-
+		
 	}
 
 	@FXML
 	void OnClickSearch(ActionEvent event) {
 		String search = SearchText.getText();
-		if (search.isEmpty()) {
+		if (search.isEmpty() || search.isBlank()) {
 			GameList.setItems(getfirstitems());
-		}else {
+		} else {
 			GameList.setItems(getsearchitems(search));
 
 		}
@@ -187,10 +185,9 @@ public class ClassicGamesController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
-
 			page.add(null);
 			previous.setVisible(false);
-			GameList.setItems(getfirstitems());
+			GameList.setItems(getnextItems());
 			GameList.setCellFactory(GameListView -> new ListCellController());
 		} catch (Exception e) {
 			e.printStackTrace();

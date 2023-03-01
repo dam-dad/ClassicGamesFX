@@ -24,7 +24,9 @@ public class DownloadGames {
 		gameDir= new File(GAMES_DIR, FilenameUtils.getBaseName(downloadedFile.getName()));
 		if (!gameDir.exists()) {
 			FileUtils.copyURLToFile(url, downloadedFile);
+			System.out.println("Archivo Descargado");
 		}
+		
 		return downloadedFile;
 	}
 
@@ -36,17 +38,21 @@ public class DownloadGames {
 			try {
 				zipFile.extractAll(gameDir.getAbsolutePath());
 				zipFile.close();
+				System.out.println("archivo Extraido");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
+		}else {
+			System.out.println("el archivo ya existia");
 		}
+		
 		return gameDir;
 	}
 
 	public static void execute(File gamedir, String emuexec) {
 		Emulator emulator = new DOSBox();
-		if (emuexec.contains("*.exe") || emuexec.contains("*.bat")) {
+		if (emuexec.endsWith("*.exe") || emuexec.endsWith("*.bat")) {
 			File exeFile = new File(gamedir, emuexec);
 			System.out.println("runningGame " + exeFile + "!");
 			try {
@@ -58,6 +64,7 @@ public class DownloadGames {
 			}
 			System.out.println("Executing!");
 		} else {
+			System.out.println(gamedir+", "+emuexec);
 			FileChooser chooser = new FileChooser();
 			chooser.setTitle("Load source from file");
 			chooser.setInitialDirectory(gamedir);

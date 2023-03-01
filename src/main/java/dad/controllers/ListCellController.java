@@ -38,12 +38,21 @@ package dad.controllers;
 	}
 	*/
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+import dad.classicgames.api.ArchiveOrg;
+import dad.classicgames.api.DownloadGames;
+import dad.classicgames.api.model.Files;
 import dad.classicgames.api.model.Item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -69,19 +78,15 @@ public class ListCellController extends ListCell<Item> {
 	private Label year;
 
 	private FXMLLoader mLLoader;
-	Item data;
-
-	@FXML
-	void OnPlayAction(ActionEvent event) {
-
-	}
+	private Item data;
+	ArchiveOrg archive = new ArchiveOrg();
 
 	@Override
 	protected void updateItem(Item game, boolean empty) {
 		super.updateItem(game, empty);
-
+		data = game;
 		if (empty || game == null) {
-
+			
 			setText(null);
 			setGraphic(null);
 
@@ -112,12 +117,51 @@ public class ListCellController extends ListCell<Item> {
 
 	@FXML
 	void OnClickDownload(ActionEvent event) {
-
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setContentText("vas a jugar a" + data.getIdentifier());
+		alert.setHeaderText("Jugar");
+		alert.setContentText("¡Que lo disfrutes!");
+		Optional<ButtonType> result = alert.showAndWait();
+		try {
+			String zipname = null;
+			String emuexec = archive.getItemMetadata(data.getIdentifier()).getMetadata().getEmulatorStart();
+			List<Files> files = new ArrayList<Files>();
+			files.addAll(archive.getItemMetadata(data.getIdentifier()).getFiles());
+			for (Files file : files) {
+				if (file.getFormat().contains("ZIP"))
+					zipname = file.getName();
+			}
+			java.io.File downloaded = DownloadGames
+					.download("https://archive.org/download/" + data.getIdentifier() + "/" + zipname);
+			java.io.File gamedir = DownloadGames.unzip(downloaded);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
 	void OnClickPlay(ActionEvent event) {
-
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setContentText("vas a jugar a" + data.getIdentifier());
+		alert.setHeaderText("Jugar");
+		alert.setContentText("¡Que lo disfrutes!");
+		Optional<ButtonType> result = alert.showAndWait();
+		try {
+			String zipname = null;
+			String emuexec = archive.getItemMetadata(data.getIdentifier()).getMetadata().getEmulatorStart();
+			List<Files> files = new ArrayList<Files>();
+			files.addAll(archive.getItemMetadata(data.getIdentifier()).getFiles());
+			for (Files file : files) {
+				if (file.getFormat().contains("ZIP"))
+					zipname = file.getName();
+			}
+			java.io.File downloaded = DownloadGames
+					.download("https://archive.org/download/" + data.getIdentifier() + "/" + zipname);
+			java.io.File gamedir = DownloadGames.unzip(downloaded);
+			DownloadGames.execute(gamedir, emuexec);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

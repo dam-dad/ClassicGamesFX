@@ -23,19 +23,31 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import retrofit2.Response;
 
 public class ClassicGamesController implements Initializable {
-
 	@FXML
 	private Menu Classicmenu;
 
 	@FXML
-	private MenuItem closemenu;
+	private ListView<Item> GameList;
 
 	@FXML
-	private ListView<Item> GameList;
+	private Button MosaicView;
+
+	@FXML
+	private Button SearchButton;
+
+	@FXML
+	private TextField SearchText;
+
+	@FXML
+	private Button ViewList;
+
+	@FXML
+	private MenuItem closemenu;
 
 	@FXML
 	private MenuBar menu;
@@ -57,12 +69,7 @@ public class ClassicGamesController implements Initializable {
 
 	@FXML
 	private TabPane tabpane;
-	@FXML
-	private BorderPane borderpane;
-	@FXML
-	private Label noselectedlabel;
 
-	private PlayController PlayController;
 	public String NextCursor = null;
 	private final String COUNT = "100";
 	private ArrayList<String> page = new ArrayList<String>();
@@ -112,6 +119,32 @@ public class ClassicGamesController implements Initializable {
 			titulos.addAll(response.body().getItems());
 			page.add(response.body().getCursor());
 			pageCounter++;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return titulos;
+
+	}
+
+	ObservableList<Item> getfirstitems() {
+		ObservableList<Item> titulos = FXCollections.observableArrayList();
+		try {
+			Response<Result> response = archive.getGames(this.COUNT, null);
+			titulos.addAll(response.body().getItems());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return titulos;
+
+	}
+
+	ObservableList<Item> getsearchitems(String search) {
+		ObservableList<Item> titulos = FXCollections.observableArrayList();
+		try {
+			Response<Result> response = archive.searchGames(null, null, search);
+			titulos.addAll(response.body().getItems());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,15 +162,35 @@ public class ClassicGamesController implements Initializable {
 		GameList.setItems(getpreviousItems());
 	}
 
+	@FXML
+	void OnClickListView(ActionEvent event) {
 
+	}
+
+	@FXML
+	void OnClickMosaicView(ActionEvent event) {
+
+	}
+
+	@FXML
+	void OnClickSearch(ActionEvent event) {
+		String search = SearchText.getText();
+		if (search.isEmpty()) {
+			GameList.setItems(getfirstitems());
+		}else {
+			GameList.setItems(getsearchitems(search));
+
+		}
+
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
-			
+
 			page.add(null);
 			previous.setVisible(false);
-			GameList.setItems(getnextItems());
+			GameList.setItems(getfirstitems());
 			GameList.setCellFactory(GameListView -> new ListCellController());
 		} catch (Exception e) {
 			e.printStackTrace();

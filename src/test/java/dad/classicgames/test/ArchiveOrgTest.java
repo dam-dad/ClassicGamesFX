@@ -29,14 +29,21 @@ public class ArchiveOrgTest {
 //		}
 
 		ArchiveOrg archive = new ArchiveOrg();
-		
+		String search="doom";
 		ArrayList<Item> listajuegos = new ArrayList<Item>();
-		Response<Result> response = archive.getGames("100", null);
+		Response<Result> response =archive.searchGames(null,null,search );
 		listajuegos.addAll(response.body().getItems());
 		for (Item item : listajuegos) {
 			System.out.println(item);
 		}
-		
-	}
+//		
+//		ArrayList<Item> listajuegos = new ArrayList<Item>();
+//		Response<Result> response = archive.getGames("100", null);
+//		listajuegos.addAll(response.body().getItems());
+//		for (Item item : listajuegos) {
+//			System.out.println(item);
+//		}
+//		
+//	}
 
-}
+}}

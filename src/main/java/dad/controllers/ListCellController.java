@@ -54,38 +54,28 @@ import javafx.scene.layout.VBox;
 public class ListCellController extends ListCell<Item> {
 
 	@FXML
-	private BorderPane Componente;
+	private Button DownloadButton;
 
 	@FXML
-	private VBox VBox;
+	private Button Playbutton;
 
 	@FXML
-	private Label date;
+	private Label Title;
 
 	@FXML
-	private ImageView logoGame;
+	private BorderPane listcomp;
 
 	@FXML
-	private Label titleGame;
-	@FXML
-	private Button playButton;
+	private Label year;
 
 	private FXMLLoader mLLoader;
 	Item data;
-//	public ListCellController() {
-//		// cargamos la vista desde el fichero FXML
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource("/ComponenteLista.fxml"));
-//			loader.setController(this);
-//			loader.load();
-//		} catch (IOException e) {
-//			throw new RuntimeException(e);
-//		}
-//	}
+
 	@FXML
 	void OnPlayAction(ActionEvent event) {
-		
+
 	}
+
 	@Override
 	protected void updateItem(Item game, boolean empty) {
 		super.updateItem(game, empty);
@@ -97,7 +87,7 @@ public class ListCellController extends ListCell<Item> {
 
 		} else {
 			if (mLLoader == null) {
-				mLLoader = new FXMLLoader(getClass().getResource("/ComponenteLista.fxml"));
+				mLLoader = new FXMLLoader(getClass().getResource("/ListComp.fxml"));
 				mLLoader.setController(this);
 
 				try {
@@ -107,23 +97,27 @@ public class ListCellController extends ListCell<Item> {
 				}
 
 			}
-			titleGame.setText(game.getTitle());
-			if (game.getLogo()!=null) {
-				logoGame.setImage(new Image("https://archive.org/download/"+game.getIdentifier()+"/"+game.getLogo()));
-				System.out.println("foto "+game.getLogo());
-			}
-			logoGame.setImage(new Image(getClass().getResource("/Images/foto.png").toString()));
+			Title.setText(game.getTitle());
 			if (game.getYear() != null) {
-				date.setText(game.getYear());
+				year.setText(game.getYear());
 			} else {
-				date.setText("Fecha desconocida");
+				year.setText("Fecha desconocida");
 			}
 
 			setText(null);
-			setGraphic(Componente);
+			setGraphic(listcomp);
 		}
 
 	}
 
-	
+	@FXML
+	void OnClickDownload(ActionEvent event) {
+
+	}
+
+	@FXML
+	void OnClickPlay(ActionEvent event) {
+
+	}
+
 }

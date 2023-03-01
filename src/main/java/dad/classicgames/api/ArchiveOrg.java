@@ -30,6 +30,11 @@ public class ArchiveOrg {
 		assertResponse(response);
 		return response;
 	}
+	public Response<Result> searchGames(String count,String cursor,String search) throws Exception {
+		Response<Result> response = api.scrape("title,logo,description,year", count,cursor, "softwarelibrary_msdos_games and title:("+search+")").execute();
+		assertResponse(response);
+		return response;
+	}
 	
 
 	public ItemMetadata getItemMetadata(String id) throws Exception {

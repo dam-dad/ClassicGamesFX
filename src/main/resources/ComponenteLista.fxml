@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="Componente" prefHeight="292.0" prefWidth="541.0" styleClass="root" stylesheets="@css/Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="Componente" prefHeight="300.0" prefWidth="600.0" styleClass="root" stylesheets="@css/Style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox fx:id="VBox" alignment="CENTER" styleClass="root" BorderPane.alignment="CENTER">
          <children>
@@ -16,14 +16,6 @@
          </children>
       </VBox>
    </top>
-   <center>
-      <HBox spacing="50.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="titleGame" styleClass="Label" text="Label" />
-            <Label fx:id="date" styleClass="Label" text="Label" />
-         </children>
-      </HBox>
-   </center>
    <bottom>
       <Button fx:id="playButton" mnemonicParsing="false" onAction="#OnPlayAction" text="Jugar" BorderPane.alignment="CENTER">
          <styleClass>
@@ -32,4 +24,12 @@
          </styleClass>
       </Button>
    </bottom>
+   <center>
+      <HBox spacing="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="titleGame" styleClass="Label" text="Label" />
+            <Label fx:id="date" styleClass="Label" text="Label" />
+         </children>
+      </HBox>
+   </center>
 </BorderPane>

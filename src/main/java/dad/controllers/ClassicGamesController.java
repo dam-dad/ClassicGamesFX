@@ -83,14 +83,16 @@ public class ClassicGamesController implements Initializable {
 			throw new RuntimeException(e);
 		}
 	}
-	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
 			previous.setVisible(false);
 			gameList.setCellFactory(nameListView -> new GameListCell());
-			loadNext(null);
+			Result result = ArchiveOrg.getInstance().getGames(COUNT, null);
+			page.add(result.getPrevious());
+			page.add(result.getCursor());
+			gameList.getItems().setAll(result.getItems());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -102,29 +104,27 @@ public class ClassicGamesController implements Initializable {
 
 	@FXML
 	void loadNext(ActionEvent event) throws Exception {
-		if (!gameList.isDisable()) {
-			if (pageCounter > 0) {
-				previous.setVisible(true);
-			}
-			Result result = ArchiveOrg.getInstance().getGames(this.COUNT, page.isEmpty() ? null : page.get(pageCounter));
-			System.out.println(result);
-			page.add(result.getPrevious());
-			pageCounter++;
-			gameList.getItems().setAll(result.getItems());
+		pageCounter++;
+		if (pageCounter > 0) {
+			previous.setVisible(true);
 		}
+		Result result = ArchiveOrg.getInstance().getGames(this.COUNT, page.get(pageCounter));
+		if (!page.contains(result.getCursor())) {
+			page.add(result.getCursor());
+		}
+		System.out.println(pageCounter);
+		gameList.getItems().setAll(result.getItems());
+
 	}
 
 	@FXML
 	void loadPrevious(ActionEvent event) throws Exception {
-		if (!gameList.isDisable()) {
-			pageCounter--;
-			if (pageCounter == 0) {
-				previous.setVisible(false);
-			}
-			Result result = ArchiveOrg.getInstance().getGames(COUNT, page.get(pageCounter));
-			System.out.println(result);
-			gameList.getItems().setAll(result.getItems());
+		pageCounter--;
+		if (pageCounter <= 0) {
+			previous.setVisible(false);
 		}
+		Result result = ArchiveOrg.getInstance().getGames(COUNT, page.get(pageCounter));
+		gameList.getItems().setAll(result.getItems());
 	}
 
 	@FXML
@@ -147,6 +147,7 @@ public class ClassicGamesController implements Initializable {
 			result = ArchiveOrg.getInstance().searchGames(null, null, search);
 		}
 		gameList.getItems().setAll(result.getItems());
+		pageCounter=0;
 	}
 
 }

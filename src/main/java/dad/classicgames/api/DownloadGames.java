@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.net.URL;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import dad.classicgames.emulator.DOSBox;
 import dad.classicgames.emulator.Emulator;
 import javafx.stage.FileChooser;
@@ -21,12 +25,12 @@ public class DownloadGames {
 		String filename = url.getFile();
 		System.out.println(filename);
 		File downloadedFile = new File(System.getProperty("java.io.tmpdir"), filename);
-		gameDir= new File(GAMES_DIR, FilenameUtils.getBaseName(downloadedFile.getName()));
+		gameDir = new File(GAMES_DIR, FilenameUtils.getBaseName(downloadedFile.getName()));
 		if (!gameDir.exists()) {
 			FileUtils.copyURLToFile(url, downloadedFile);
 			System.out.println("Archivo Descargado");
 		}
-		
+
 		return downloadedFile;
 	}
 
@@ -43,17 +47,18 @@ public class DownloadGames {
 				e.printStackTrace();
 			}
 
-		}else {
+		} else {
 			System.out.println("el archivo ya existia");
 		}
-		
+
 		return gameDir;
 	}
 
 	public static void execute(File gamedir, String emuexec) {
 		Emulator emulator = new DOSBox();
 		System.out.println(emuexec);
-		if (emuexec.endsWith(".exe") || emuexec.endsWith(".bat")||emuexec.endsWith(".EXE")||emuexec.endsWith(".BAT")) {
+		if (emuexec.endsWith(".exe") || emuexec.endsWith(".bat") || emuexec.endsWith(".EXE")
+				|| emuexec.endsWith(".BAT")) {
 			File exeFile = new File(gamedir, emuexec);
 			System.out.println("runningGame " + exeFile + "!");
 			try {
@@ -65,7 +70,7 @@ public class DownloadGames {
 			}
 			System.out.println("Executing!");
 		} else {
-			System.out.println(gamedir+", "+emuexec);
+			System.out.println(gamedir + ", " + emuexec);
 			FileChooser chooser = new FileChooser();
 			chooser.setTitle("Load source from file");
 			chooser.setInitialDirectory(gamedir);

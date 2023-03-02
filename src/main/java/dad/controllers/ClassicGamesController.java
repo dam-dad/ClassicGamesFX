@@ -35,6 +35,9 @@ public class ClassicGamesController implements Initializable {
 	private ListView<Item> GameList;
 
 	@FXML
+	private ListView<Item> LibraryList;
+
+	@FXML
 	private Button MosaicView;
 
 	@FXML
@@ -114,6 +117,9 @@ public class ClassicGamesController implements Initializable {
 				previous.setVisible(true);
 			}
 			Response<Result> response = archive.getGames(this.COUNT, page.get(pageCounter));
+			if (response.body().getItems() == null) {
+				System.out.println("No hay mas juegos");
+			}
 			titulos.addAll(response.body().getItems());
 			page.add(response.body().getCursor());
 			pageCounter++;

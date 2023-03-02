@@ -41,7 +41,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import dad.classicgames.api.ArchiveOrg;
 import dad.classicgames.api.DownloadGames;
 import dad.classicgames.api.model.Files;
@@ -55,10 +54,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 
 public class ListCellController extends ListCell<Item> {
 
@@ -80,6 +76,7 @@ public class ListCellController extends ListCell<Item> {
 	private FXMLLoader mLLoader;
 	private Item data;
 	ArchiveOrg archive = new ArchiveOrg();
+	ArrayList<Item> jsondata = new ArrayList<Item>();
 
 	@Override
 	protected void updateItem(Item game, boolean empty) {
@@ -117,6 +114,7 @@ public class ListCellController extends ListCell<Item> {
 
 	@FXML
 	void OnClickDownload(ActionEvent event) {
+
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setContentText("vas a jugar a" + data.getIdentifier());
 		alert.setHeaderText("Jugar");

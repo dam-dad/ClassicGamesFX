@@ -31,7 +31,7 @@ public class ArchiveOrg {
 		return response;
 	}
 	public Response<Result> searchGames(String count,String cursor,String search) throws Exception {
-		Response<Result> response = api.scrape("title,logo,description,year", count,cursor, "softwarelibrary_msdos_games and title:("+search+")").execute();
+		Response<Result> response = api.scrape("title,logo,description,year", count,cursor, "Collection:(softwarelibrary_msdos_games) AND title:("+search+")").execute();
 		assertResponse(response);
 		return response;
 	}

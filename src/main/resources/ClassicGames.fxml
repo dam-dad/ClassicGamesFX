@@ -26,7 +26,7 @@
 					<content>
 						<BorderPane>
 							<center>
-								<ListView fx:id="GameList"
+								<ListView fx:id="gameList"
 									BorderPane.alignment="CENTER" />
 							</center>
 							<bottom>
@@ -34,7 +34,7 @@
 									prefWidth="800.0" spacing="20.0" BorderPane.alignment="CENTER">
 									<children>
 										<Button fx:id="previous" mnemonicParsing="false"
-											onAction="#loadprevious">
+											onAction="#loadPrevious">
 											<graphic>
 												<ImageView fitHeight="20.0" fitWidth="20.0">
 													<image>
@@ -44,7 +44,7 @@
 											</graphic>
 										</Button>
 										<Button fx:id="next" mnemonicParsing="false"
-											onAction="#loadnexts">
+											onAction="#loadNext">
 											<graphic>
 												<ImageView fitHeight="20.0" fitWidth="20.0">
 													<image>

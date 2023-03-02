@@ -8,15 +8,11 @@ import java.util.ResourceBundle;
 import dad.classicgames.api.ArchiveOrg;
 import dad.classicgames.api.model.Item;
 import dad.classicgames.api.model.Result;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -25,17 +21,16 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import retrofit2.Response;
 
 public class ClassicGamesController implements Initializable {
 	@FXML
 	private Menu Classicmenu;
 
 	@FXML
-	private ListView<Item> GameList;
+	private ListView<Item> gameList;
 
 	@FXML
-	private ListView<Item> LibraryList;
+	private ListView<Item> libraryList;
 
 	@FXML
 	private Button MosaicView;
@@ -74,10 +69,9 @@ public class ClassicGamesController implements Initializable {
 	private TabPane tabpane;
 
 	public String NextCursor = null;
-	private final String COUNT = "100";
+	private final int COUNT = 100;
 	private ArrayList<String> page = new ArrayList<String>();
 	private int pageCounter = 0;
-	private ArchiveOrg archive = new ArchiveOrg();
 
 	public ClassicGamesController() {
 		// cargamos la vista desde el fichero FXML
@@ -89,90 +83,53 @@ public class ClassicGamesController implements Initializable {
 			throw new RuntimeException(e);
 		}
 	}
+	
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			previous.setVisible(false);
+			gameList.setCellFactory(nameListView -> new GameListCell());
+			loadNext(null);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public BorderPane getview() {
 		return root;
 	}
 
-	ObservableList<Item> getpreviousItems() {
-		ObservableList<Item> titulos = FXCollections.observableArrayList();
-		try {
-			pageCounter--;
-			if (pageCounter == 0)
-				previous.setVisible(false);
-			Response<Result> response = archive.getGames(this.COUNT, page.get(pageCounter));
-			titulos.addAll(response.body().getItems());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return titulos;
-
-	}
-
-	ObservableList<Item> getnextItems() {
-		ObservableList<Item> titulos = FXCollections.observableArrayList();
-		try {
+	@FXML
+	void loadNext(ActionEvent event) throws Exception {
+		if (!gameList.isDisable()) {
 			if (pageCounter > 0) {
 				previous.setVisible(true);
 			}
-			Response<Result> response = archive.getGames(this.COUNT, page.get(pageCounter));
-			if (response.body().getItems() == null) {
-				System.out.println("No hay mas juegos");
-			}
-			titulos.addAll(response.body().getItems());
-			page.add(response.body().getCursor());
+			Result result = ArchiveOrg.getInstance().getGames(this.COUNT, page.isEmpty() ? null : page.get(pageCounter));
+			System.out.println(result);
+			page.add(result.getPrevious());
 			pageCounter++;
-		} catch (Exception e) {
-			e.printStackTrace();
+			gameList.getItems().setAll(result.getItems());
 		}
-		return titulos;
-
-	}
-
-	ObservableList<Item> getfirstitems() {
-		ObservableList<Item> titulos = FXCollections.observableArrayList();
-		try {
-			Response<Result> response = archive.getGames(this.COUNT, null);
-			titulos.addAll(response.body().getItems());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return titulos;
-
-	}
-
-	ObservableList<Item> getsearchitems(String search) {
-		ObservableList<Item> titulos = FXCollections.observableArrayList();
-		try {
-			Response<Result> response = archive.searchGames(null, null, search);
-			titulos.addAll(response.body().getItems());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return titulos;
-
 	}
 
 	@FXML
-	void loadnexts(ActionEvent event) {
-		if (!GameList.isDisable()) {
-			GameList.setItems(getnextItems());
-		}
-
-	}
-
-	@FXML
-	void loadprevious(ActionEvent event) {
-		if (!GameList.isDisable()) {
-			GameList.setItems(getpreviousItems());
+	void loadPrevious(ActionEvent event) throws Exception {
+		if (!gameList.isDisable()) {
+			pageCounter--;
+			if (pageCounter == 0) {
+				previous.setVisible(false);
+			}
+			Result result = ArchiveOrg.getInstance().getGames(COUNT, page.get(pageCounter));
+			System.out.println(result);
+			gameList.getItems().setAll(result.getItems());
 		}
 	}
 
 	@FXML
 	void OnClickListView(ActionEvent event) {
-		GameList.setDisable(false);
+		gameList.setDisable(false);
 	}
 
 	@FXML
@@ -181,27 +138,15 @@ public class ClassicGamesController implements Initializable {
 	}
 
 	@FXML
-	void OnClickSearch(ActionEvent event) {
+	void OnClickSearch(ActionEvent event) throws Exception {
 		String search = SearchText.getText();
+		Result result;
 		if (search.isEmpty() || search.isBlank()) {
-			GameList.setItems(getfirstitems());
+			result = ArchiveOrg.getInstance().getGames(COUNT, null);
 		} else {
-			GameList.setItems(getsearchitems(search));
-
+			result = ArchiveOrg.getInstance().searchGames(null, null, search);
 		}
-
-	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		try {
-			page.add(null);
-			previous.setVisible(false);
-			GameList.setItems(getnextItems());
-			GameList.setCellFactory(GameListView -> new ListCellController());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		gameList.getItems().setAll(result.getItems());
 	}
 
 }

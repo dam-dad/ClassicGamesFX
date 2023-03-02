@@ -10,7 +10,7 @@ import retrofit2.http.Query;
 public interface IArchiveOrg {
 	
 	@GET("services/search/v1/scrape")
-	Call<Result> scrape(@Query("fields") String fields,@Query("count") String count,@Query("cursor") String cursor, @Query("q") String query);
+	Call<Result> scrape(@Query("fields") String fields, @Query("count") Integer count, @Query("cursor") String cursor, @Query("q") String query);
 
 	@GET("metadata/{id}")
 	Call<ItemMetadata> getMetadata(@Path("id") String id);

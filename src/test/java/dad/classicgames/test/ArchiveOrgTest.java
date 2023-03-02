@@ -28,11 +28,11 @@ public class ArchiveOrgTest {
 //
 //		}
 
-		ArchiveOrg archive = new ArchiveOrg();
-		String search="doom";
+		ArchiveOrg archive = ArchiveOrg.getInstance();
+		String search = "doom";
 		ArrayList<Item> listajuegos = new ArrayList<Item>();
-		Response<Result> response =archive.searchGames(null,null,search );
-		listajuegos.addAll(response.body().getItems());
+		Result result = archive.searchGames(null, null, search);
+		listajuegos.addAll(result.getItems());
 		for (Item item : listajuegos) {
 			System.out.println(item);
 		}
@@ -46,4 +46,5 @@ public class ArchiveOrgTest {
 //		
 //	}
 
-}}
+	}
+}

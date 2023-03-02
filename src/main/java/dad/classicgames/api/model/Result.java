@@ -50,4 +50,10 @@ public class Result {
 		this.previous = previous;
 	}
 
+	@Override
+	public String toString() {
+		return "Result [items=" + items.size() + ", count=" + count + ", cursor=" + cursor + ", previous=" + previous
+				+ ", total=" + total + "]";
+	}
+
 }

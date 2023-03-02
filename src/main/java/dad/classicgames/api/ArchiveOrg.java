@@ -10,10 +10,12 @@ public class ArchiveOrg {
 
 	private IArchiveOrg api;
 
-	public ArchiveOrg() {
+	private ArchiveOrg() {
 
-		Retrofit retrofit = new Retrofit.Builder().baseUrl("https://archive.org/")
-				.addConverterFactory(GsonConverterFactory.create()).build();
+		Retrofit retrofit = new Retrofit.Builder()
+				.baseUrl("https://archive.org/")
+				.addConverterFactory(GsonConverterFactory.create())
+				.build();
 
 		api = retrofit.create(IArchiveOrg.class);
 
@@ -25,22 +27,36 @@ public class ArchiveOrg {
 		}
 	}
 
-	public Response<Result> getGames(String count,String cursor) throws Exception {
-		Response<Result> response = api.scrape("title,logo,description,year", count,cursor, "softwarelibrary_msdos_games").execute();
+	public Result getGames(Integer count, String cursor) throws Exception {
+		System.out.println("getGames: count=" + count + ", cursor=" + cursor);
+		Response<Result> response = api.scrape("title,logo,description,year", count, cursor, "softwarelibrary_msdos_games").execute();
 		assertResponse(response);
-		return response;
+		return response.body();
 	}
-	public Response<Result> searchGames(String count,String cursor,String search) throws Exception {
-		Response<Result> response = api.scrape("title,logo,description,year", count,cursor, "Collection:(softwarelibrary_msdos_games) AND title:("+search+")").execute();
+
+	public Result searchGames(Integer count, String cursor, String search) throws Exception {
+		System.out.println("searchGames: count=" + count + ", cursor=" + cursor + ", search=" + search);
+		Response<Result> response = api.scrape("title,logo,description,year", count, cursor, "collection:(softwarelibrary_msdos_games) AND title:(" + search + ")").execute();
 		assertResponse(response);
-		return response;
+		return response.body();
 	}
-	
 
 	public ItemMetadata getItemMetadata(String id) throws Exception {
+		System.out.println("getItemMetadata: id=" + id);
 		Response<ItemMetadata> response = api.getMetadata(id).execute();
 		assertResponse(response);
 		return response.body();
+	}
+
+	// singleton
+
+	private static ArchiveOrg instance;
+
+	public static ArchiveOrg getInstance() {
+		if (instance == null) {
+			instance = new ArchiveOrg();
+		}
+		return instance;
 	}
 
 }

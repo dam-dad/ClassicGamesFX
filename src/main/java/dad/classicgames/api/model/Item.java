@@ -8,6 +8,7 @@ public class Item {
 	private String description;
 	private String year;
 	private String creator;
+	
 	public String getIdentifier() {
 		return identifier;
 	}

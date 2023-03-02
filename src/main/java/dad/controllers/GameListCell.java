@@ -1,42 +1,5 @@
 package dad.controllers;
 
-/*
- @Override
-	protected void updateItem(Metadata metadata, boolean empty) {
-		super.updateItem(metadata, empty);
-
-		if (empty || metadata == null) {
-
-			setText(null);
-			setGraphic(null);
-
-		} else {
-			if (mLLoader == null) {
-				mLLoader = new FXMLLoader(getClass().getResource("/ComponenteLista.fxml"));
-				mLLoader.setController(this);
-
-				try {
-					mLLoader.load();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-			} 
-			titleGame.setText(String.valueOf(metadata.getTitle()));
-			DescriptionGame.setText(String.valueOf(metadata.getDescription()));
-			 if(metadata.getLogo()!=null) {
-				 Image image= new Image("https://archive.org/download/" + metadata.getIdentifier() + "/" + metadata.getLogo());
-	                logoGame.setImage(image);
-	            } else {
-	            	Image classicimage=new Image("/resources/Images/foto.png");
-	            	logoGame.setImage(classicimage);
-	            }
-	            setText(null);
-	            setGraphic(component);
-		}
-		
-	}
-	*/
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,58 +19,58 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.BorderPane;
 
-public class ListCellController extends ListCell<Item> {
+public class GameListCell extends ListCell<Item> {
+	
+	private Item data;
+	
+	@FXML
+	private Button downloadButton;
 
 	@FXML
-	private Button DownloadButton;
+	private Button playbutton;
 
 	@FXML
-	private Button Playbutton;
+	private Label title;
 
 	@FXML
-	private Label Title;
-
-	@FXML
-	private BorderPane listcomp;
+	private BorderPane view;	
 
 	@FXML
 	private Label year;
 
-	private FXMLLoader mLLoader;
-	private Item data;
-	ArchiveOrg archive = new ArchiveOrg();
-	ArrayList<Item> jsondata = new ArrayList<Item>();
+	public GameListCell() {
+		super();
+		try {
+			FXMLLoader mLLoader = new FXMLLoader(getClass().getResource("/GameListCell.fxml"));
+			mLLoader.setController(this);
+			mLLoader.load();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	@Override
-	protected void updateItem(Item game, boolean empty) {
-		super.updateItem(game, empty);
-		data = game;
-		if (empty || game == null) {
+	protected void updateItem(Item item, boolean empty) {
+		super.updateItem(item, empty);
+		
+		data = item;
 
-			setText(null);
+		setText(null);
+		
+		if (empty || item == null) {
+
 			setGraphic(null);
 
 		} else {
-			if (mLLoader == null) {
-				mLLoader = new FXMLLoader(getClass().getResource("/ListComp.fxml"));
-				mLLoader.setController(this);
-
-				try {
-					mLLoader.load();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-			}
-			Title.setText(game.getTitle());
-			if (game.getYear() != null) {
-				year.setText(game.getYear());
+			
+			title.setText(item.getTitle());
+			if (item.getYear() != null) {
+				year.setText(item.getYear());
 			} else {
 				year.setText("Fecha desconocida");
 			}
-
-			setText(null);
-			setGraphic(listcomp);
+			setGraphic(view);
+			
 		}
 
 	}
@@ -122,9 +85,9 @@ public class ListCellController extends ListCell<Item> {
 		Optional<ButtonType> result = alert.showAndWait();
 		try {
 			String zipname = null;
-			String emuexec = archive.getItemMetadata(data.getIdentifier()).getMetadata().getEmulatorStart();
+			String emuexec = ArchiveOrg.getInstance().getItemMetadata(data.getIdentifier()).getMetadata().getEmulatorStart();
 			List<Files> files = new ArrayList<Files>();
-			files.addAll(archive.getItemMetadata(data.getIdentifier()).getFiles());
+			files.addAll(ArchiveOrg.getInstance().getItemMetadata(data.getIdentifier()).getFiles());
 			for (Files file : files) {
 				if (file.getFormat().contains("ZIP"))
 					zipname = file.getName();
@@ -145,9 +108,9 @@ public class ListCellController extends ListCell<Item> {
 		Optional<ButtonType> result = alert.showAndWait();
 		try {
 			String zipname = null;
-			String emuexec = archive.getItemMetadata(data.getIdentifier()).getMetadata().getEmulatorStart();
+			String emuexec = ArchiveOrg.getInstance().getItemMetadata(data.getIdentifier()).getMetadata().getEmulatorStart();
 			List<Files> files = new ArrayList<Files>();
-			files.addAll(archive.getItemMetadata(data.getIdentifier()).getFiles());
+			files.addAll(ArchiveOrg.getInstance().getItemMetadata(data.getIdentifier()).getFiles());
 			for (Files file : files) {
 				if (file.getFormat().contains("ZIP"))
 					zipname = file.getName();

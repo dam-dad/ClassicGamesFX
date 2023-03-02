@@ -11,9 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.FlowPane;
 import net.lingala.zip4j.model.ArchiveExtraDataRecord;
 
-public class MosaicController implements Initializable {
+public class MosaicController {
 	@FXML
 	private FlowPane flowview;
+	private MosaicComp mosacomp = new MosaicComp();
 
 	public MosaicController() {
 		try {
@@ -25,10 +26,12 @@ public class MosaicController implements Initializable {
 		}
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		ArchiveOrg game=
+	public void add() {
+//		flowview.getChildren().add(mosacomp);
 	}
-	
-	
+
+	FlowPane getflowview() {
+		return flowview;
+	}
+
 }

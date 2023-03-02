@@ -74,7 +74,6 @@ public class ClassicGamesController implements Initializable {
 	private final String COUNT = "100";
 	private ArrayList<String> page = new ArrayList<String>();
 	private int pageCounter = 0;
-
 	private ArchiveOrg archive = new ArchiveOrg();
 
 	public ClassicGamesController() {
@@ -111,7 +110,7 @@ public class ClassicGamesController implements Initializable {
 	ObservableList<Item> getnextItems() {
 		ObservableList<Item> titulos = FXCollections.observableArrayList();
 		try {
-			if (pageCounter == 0) {
+			if (pageCounter > 0) {
 				previous.setVisible(true);
 			}
 			Response<Result> response = archive.getGames(this.COUNT, page.get(pageCounter));
@@ -152,22 +151,27 @@ public class ClassicGamesController implements Initializable {
 
 	@FXML
 	void loadnexts(ActionEvent event) {
-		GameList.setItems(getnextItems());
+		if (!GameList.isDisable()) {
+			GameList.setItems(getnextItems());
+		}
+
 	}
 
 	@FXML
 	void loadprevious(ActionEvent event) {
-		GameList.setItems(getpreviousItems());
+		if (!GameList.isDisable()) {
+			GameList.setItems(getpreviousItems());
+		}
 	}
 
 	@FXML
 	void OnClickListView(ActionEvent event) {
-
+		GameList.setDisable(false);
 	}
 
 	@FXML
 	void OnClickMosaicView(ActionEvent event) {
-		
+
 	}
 
 	@FXML

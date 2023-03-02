@@ -10,56 +10,62 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="listcomp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="777.0" styleClass="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <left>
-      <HBox spacing="20.0" styleClass="root" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="Title" styleClass="Label" text="Label" />
-            <Label fx:id="year" styleClass="Label" text="Label" />
-         </children>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-      </HBox>
-   </left>
-   <right>
-      <HBox alignment="CENTER" prefHeight="63.0" prefWidth="112.0" spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="Playbutton" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="25.0" prefWidth="25.0">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0">
-                     <image>
-                        <Image url="@Images/ico/play.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="DownloadButton" mnemonicParsing="false" onAction="#OnClickDownload" prefHeight="25.0" prefWidth="25.0">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="22.0">
-                     <image>
-                        <Image url="@Images/ico/descargar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-         <opaqueInsets>
-            <Insets right="5.0" />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </HBox>
-   </right>
-   <padding>
-      <Insets top="10.0" />
-   </padding>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-   <stylesheets>
-      <URL value="@css/Style.css" />
-      <URL value="@css/root.css" />
-   </stylesheets>
+<BorderPane fx:id="listcomp" maxHeight="-Infinity"
+	maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+	prefHeight="55.0" prefWidth="777.0" styleClass="root"
+	xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+	<left>
+		<HBox spacing="20.0" styleClass="root"
+			BorderPane.alignment="CENTER">
+			<children>
+				<Label fx:id="Title" styleClass="Label" text="Label" />
+				<Label fx:id="year" styleClass="Label" text="Label" />
+			</children>
+			<padding>
+				<Insets left="10.0" />
+			</padding>
+		</HBox>
+	</left>
+	<right>
+		<HBox alignment="CENTER" prefHeight="63.0" prefWidth="112.0"
+			spacing="10.0" BorderPane.alignment="CENTER">
+			<children>
+				<Button fx:id="Playbutton" mnemonicParsing="false"
+					onAction="#OnClickPlay" prefHeight="25.0" prefWidth="25.0">
+					<graphic>
+						<ImageView fitHeight="20.0" fitWidth="20.0">
+							<image>
+								<Image url="@Images/ico/play.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+				<Button fx:id="DownloadButton" mnemonicParsing="false"
+					onAction="#OnClickDownload" prefHeight="25.0" prefWidth="25.0">
+					<graphic>
+						<ImageView fitHeight="20.0" fitWidth="22.0">
+							<image>
+								<Image url="@Images/ico/descargar.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+			</children>
+			<opaqueInsets>
+				<Insets right="5.0" />
+			</opaqueInsets>
+			<cursor>
+				<Cursor fx:constant="DEFAULT" />
+			</cursor>
+		</HBox>
+	</right>
+	<padding>
+		<Insets top="10.0" />
+	</padding>
+	<opaqueInsets>
+		<Insets />
+	</opaqueInsets>
+	<stylesheets>
+		<URL value="@css/Style.css" />
+	</stylesheets>
 </BorderPane>

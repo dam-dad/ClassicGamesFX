@@ -12,9 +12,9 @@
 <?import javafx.scene.text.Text?>
 
 
-<BorderPane prefHeight="300.0" prefWidth="497.0" style="-fx-background-color: #eff0c0;" stylesheets="@css/Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="300.0" prefWidth="357.0" style="-fx-background-color: #eff0c0;" stylesheets="@css/Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="logo" fitHeight="230.0" fitWidth="238.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="title" text="Label" />
@@ -22,14 +22,14 @@
       </VBox>
    </left>
    <center>
-      <Text fx:id="description" strokeType="OUTSIDE" strokeWidth="0.0" text="label" textAlignment="CENTER" wrappingWidth="330.13671875" BorderPane.alignment="CENTER_LEFT">
+      <Text fx:id="description" strokeType="OUTSIDE" strokeWidth="0.0" text="label" textAlignment="CENTER" wrappingWidth="249.13671875" BorderPane.alignment="CENTER_LEFT">
          <font>
             <Font size="10.0" />
          </font>
       </Text>
    </center>
    <bottom>
-      <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="600.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_LEFT" prefHeight="35.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="Playbtn" mnemonicParsing="false">
                <graphic>

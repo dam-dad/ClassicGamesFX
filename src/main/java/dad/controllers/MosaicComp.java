@@ -27,13 +27,17 @@ public class MosaicComp {
 	private Label title;
 
 	public MosaicComp() {
+		super();
+		// carga la vista desde FXML (MonthCalendar es controlador y vista a la vez [porque es un componente])
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/MosaicComp.fxml"));
+			loader.setRoot(this);
 			loader.setController(this);
 			loader.load();
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 }

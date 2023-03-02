@@ -52,7 +52,8 @@ public class DownloadGames {
 
 	public static void execute(File gamedir, String emuexec) {
 		Emulator emulator = new DOSBox();
-		if (emuexec.endsWith("*.exe") || emuexec.endsWith("*.bat")) {
+		System.out.println(emuexec);
+		if (emuexec.endsWith(".exe") || emuexec.endsWith(".bat")||emuexec.endsWith(".EXE")||emuexec.endsWith(".BAT")) {
 			File exeFile = new File(gamedir, emuexec);
 			System.out.println("runningGame " + exeFile + "!");
 			try {

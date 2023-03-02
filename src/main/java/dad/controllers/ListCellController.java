@@ -86,7 +86,7 @@ public class ListCellController extends ListCell<Item> {
 		super.updateItem(game, empty);
 		data = game;
 		if (empty || game == null) {
-			
+
 			setText(null);
 			setGraphic(null);
 
@@ -120,7 +120,7 @@ public class ListCellController extends ListCell<Item> {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setContentText("vas a jugar a" + data.getIdentifier());
 		alert.setHeaderText("Jugar");
-		alert.setContentText("¡Que lo disfrutes!");
+
 		Optional<ButtonType> result = alert.showAndWait();
 		try {
 			String zipname = null;
@@ -144,7 +144,6 @@ public class ListCellController extends ListCell<Item> {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setContentText("vas a jugar a" + data.getIdentifier());
 		alert.setHeaderText("Jugar");
-		alert.setContentText("¡Que lo disfrutes!");
 		Optional<ButtonType> result = alert.showAndWait();
 		try {
 			String zipname = null;

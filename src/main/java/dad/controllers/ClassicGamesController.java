@@ -151,11 +151,14 @@ public class ClassicGamesController implements Initializable {
 		Result result;
 		if (search.isEmpty() || search.isBlank()) {
 			result = ArchiveOrg.getInstance().getGames(COUNT, null);
+			gameQuantity.setText("1-" + COUNT);
 		} else {
 			result = ArchiveOrg.getInstance().searchGames(null, null, search);
+			gameQuantity.setText("Resultados totales = " + result.getTotal());
 		}
 		gameList.getItems().setAll(result.getItems());
 		pageCounter = 0;
+		
 	}
 
 	@FXML

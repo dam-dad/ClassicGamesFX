@@ -19,10 +19,12 @@ public class ClassicGamesApp extends Application {
 		primaryStage.setTitle("juego");
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		primaryStage.getIcons().add(new Image(ClassicGamesApp.class.getResourceAsStream("/Images/ico/game-control.png")));
+		primaryStage.getIcons()
+				.add(new Image(ClassicGamesApp.class.getResourceAsStream("/Images/ico/game-control.png")));
 	}
-@Override
-public void stop() throws Exception {
-GameReport.generarPdf();
-}
+
+	@Override
+	public void stop() throws Exception {
+		GameReport.generarPdf();
+	}
 }

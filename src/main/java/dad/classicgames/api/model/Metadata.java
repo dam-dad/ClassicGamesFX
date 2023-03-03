@@ -23,9 +23,6 @@ public class Metadata {
 	@SerializedName("emulator_start")
 	@Expose
 	private String emulatorStart;
-	@SerializedName("logo")
-	@Expose
-	private String logo;
 
 	public String getIdentifier() {
 		return identifier;
@@ -67,18 +64,11 @@ public class Metadata {
 		this.emulatorStart = emulatorStart;
 	}
 
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
 
 	@Override
 	public String toString() {
 		return "Metadata [identifier=" + identifier + ", date=" + date + ", description=" + description + ", title="
-				+ title + ", emulatorStart=" + emulatorStart + ", logo=" + logo + "]";
+				+ title + ", emulatorStart=" + emulatorStart + "]";
 	}
 
 }

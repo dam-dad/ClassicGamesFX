@@ -61,39 +61,48 @@ public class DownloadGames {
 	}
 
 	public void execute(String emuexec) {
-		Emulator emulator = new DOSBox();
-		if (emuexec.endsWith(".exe") || emuexec.endsWith(".bat") || emuexec.endsWith(".EXE")
-				|| emuexec.endsWith(".BAT")) {
-			File exeFile = new File(gameDir, emuexec);
-			System.out.println("runningGame " + exeFile + "!");
-			try {
-				emulator.run(exeFile).waitFor();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("Executing!");
-		} else {
-			System.out.println(gameDir + ", " + emuexec);
-			FileChooser chooser = new FileChooser();
-			chooser.setTitle("Load source from file");
-			chooser.setInitialDirectory(gameDir);
-			File chosen = chooser.showOpenDialog(null);
-			if (chosen != null) {
-				System.out.println(chosen.getName());
-				File exeFile = new File(gameDir, chosen.getName());
+		Task<Void> task = new Task<Void>() {
+			@Override
+			public Void call() throws IOException {
+				if (!isdownloaded) {
+					Emulator emulator = new DOSBox();
+					if (emuexec.endsWith(".exe") || emuexec.endsWith(".bat") || emuexec.endsWith(".EXE")
+							|| emuexec.endsWith(".BAT")) {
+						File exeFile = new File(gameDir, emuexec);
+						System.out.println("runningGame " + exeFile + "!");
+						try {
+							emulator.run(exeFile).waitFor();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						System.out.println("Executing!");
+					} else {
+						System.out.println(gameDir + ", " + emuexec);
+						FileChooser chooser = new FileChooser();
+						chooser.setTitle("Load source from file");
+						chooser.setInitialDirectory(gameDir);
+						File chosen = chooser.showOpenDialog(null);
+						if (chosen != null) {
+							System.out.println(chosen.getName());
+							File exeFile = new File(gameDir, chosen.getName());
 
-				try {
-					emulator.run(exeFile).waitFor();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
+							try {
+								emulator.run(exeFile).waitFor();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+					isdownloaded = true;
 				}
+				return null;
 			}
-		}
-
+		};
+		new Thread(task).start();
 	}
 
 	public File getGameDir() {

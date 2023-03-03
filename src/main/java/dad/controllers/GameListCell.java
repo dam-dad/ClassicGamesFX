@@ -39,6 +39,7 @@ public class GameListCell extends ListCell<Item> {
 	@FXML
 	private Label year;
 	DownloadGames download = new DownloadGames();
+	static List<Item> reportgames = new ArrayList<>();
 
 	public GameListCell() {
 		super();
@@ -108,6 +109,7 @@ public class GameListCell extends ListCell<Item> {
 	void OnClickPlay(ActionEvent event) {
 		String emuexec;
 		try {
+
 			emuexec = ArchiveOrg.getInstance().getItemMetadata(data.getIdentifier()).getMetadata().getEmulatorStart();
 			download.setGameVars("https://archive.org/download/" + data.getIdentifier() + "/" + getZipName());
 			if (!download.gameDirExist()) {
@@ -115,9 +117,18 @@ public class GameListCell extends ListCell<Item> {
 				download.unzip();
 			}
 			download.execute(emuexec);
+			if (!reportgames.contains(data)) {
+				reportgames.add(data);
+			}
+
+			System.out.println(reportgames);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+}
 
+	public static List<Item> getReportgames() {
+		return reportgames;
 	}
+
 }

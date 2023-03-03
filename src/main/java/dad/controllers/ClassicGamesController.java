@@ -6,13 +6,16 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import dad.classicgames.api.ArchiveOrg;
+import dad.classicgames.api.DownloadGames;
 import dad.classicgames.api.model.Item;
 import dad.classicgames.api.model.Result;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -28,9 +31,6 @@ public class ClassicGamesController implements Initializable {
 
 	@FXML
 	private ListView<Item> gameList;
-
-	@FXML
-	private ListView<Item> libraryList;
 
 	@FXML
 	private Button MosaicView;
@@ -67,11 +67,16 @@ public class ClassicGamesController implements Initializable {
 
 	@FXML
 	private TabPane tabpane;
+	@FXML
+	private Label gameQuantity;
+	@FXML
+	private MenuItem menuDir;
 
 	public String NextCursor = null;
 	private final int COUNT = 100;
 	private ArrayList<String> page = new ArrayList<String>();
 	private int pageCounter = 0;
+	private LibraryController libraryController = new LibraryController();
 
 	public ClassicGamesController() {
 		// cargamos la vista desde el fichero FXML
@@ -87,12 +92,14 @@ public class ClassicGamesController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
+			gameQuantity.setText("1-" + COUNT);
 			previous.setVisible(false);
 			gameList.setCellFactory(nameListView -> new GameListCell());
 			Result result = ArchiveOrg.getInstance().getGames(COUNT, null);
 			page.add(result.getPrevious());
 			page.add(result.getCursor());
 			gameList.getItems().setAll(result.getItems());
+			tabiblio.setContent(libraryController.getview());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -104,6 +111,7 @@ public class ClassicGamesController implements Initializable {
 
 	@FXML
 	void loadNext(ActionEvent event) throws Exception {
+
 		pageCounter++;
 		if (pageCounter > 0) {
 			previous.setVisible(true);
@@ -112,13 +120,13 @@ public class ClassicGamesController implements Initializable {
 		if (!page.contains(result.getCursor())) {
 			page.add(result.getCursor());
 		}
-		System.out.println(pageCounter);
 		gameList.getItems().setAll(result.getItems());
-
+		gameQuantity.setText(((COUNT * pageCounter) + 1) + " " + ((COUNT * pageCounter) + 100));
 	}
 
 	@FXML
 	void loadPrevious(ActionEvent event) throws Exception {
+		gameQuantity.setText(((COUNT * pageCounter) - 100 + 1) + " " + COUNT * pageCounter);
 		pageCounter--;
 		if (pageCounter <= 0) {
 			previous.setVisible(false);
@@ -147,7 +155,23 @@ public class ClassicGamesController implements Initializable {
 			result = ArchiveOrg.getInstance().searchGames(null, null, search);
 		}
 		gameList.getItems().setAll(result.getItems());
-		pageCounter=0;
+		pageCounter = 0;
+	}
+
+	@FXML
+	void OnActionClose(ActionEvent event) {
+		Platform.exit();
+	}
+
+	@FXML
+	void OnActionDir(ActionEvent event) {
+		String path = DownloadGames.GAMES_DIR.getAbsolutePath();
+		System.out.println(path);
+		try {
+			Process p = new ProcessBuilder("explorer.exe", path).start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

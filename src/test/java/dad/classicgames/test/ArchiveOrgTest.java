@@ -1,5 +1,7 @@
 package dad.classicgames.test;
 
+import java.io.File;
+import dad.classicgames.api.DownloadGames;
 import java.util.ArrayList;
 //import org.jsoup.Jsoup; import ParseHtmlToText
 import dad.classicgames.api.ArchiveOrg;
@@ -28,14 +30,14 @@ public class ArchiveOrgTest {
 //
 //		}
 
-		ArchiveOrg archive = ArchiveOrg.getInstance();
-		String search = "doom";
-		ArrayList<Item> listajuegos = new ArrayList<Item>();
-		Result result = archive.searchGames(null, null, search);
-		listajuegos.addAll(result.getItems());
-		for (Item item : listajuegos) {
-			System.out.println(item);
-		}
+//		ArchiveOrg archive = ArchiveOrg.getInstance();
+//		String search = "doom";
+//		ArrayList<Item> listajuegos = new ArrayList<Item>();
+//		Result result = archive.searchGames(null, null, search);
+//		listajuegos.addAll(result.getItems());
+//		for (Item item : listajuegos) {
+//			System.out.println(item);
+//		}
 //		
 //		ArrayList<Item> listajuegos = new ArrayList<Item>();
 //		Response<Result> response = archive.getGames("100", null);
@@ -45,6 +47,12 @@ public class ArchiveOrgTest {
 //		}
 //		
 //	}
-
+ File file = DownloadGames.GAMES_DIR;
+ for (File ficheroEntraFile : file.listFiles()) {
+	System.out.println(ficheroEntraFile.getName());
+}
+		
+		
+		
 	}
 }

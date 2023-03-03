@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -14,60 +15,23 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="root" prefHeight="700.0" prefWidth="900.0"
-	style="-fx-background-color: #eff0c0;" stylesheets="@css/Style.css"
-	xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #eff0c0;" stylesheets="@css/Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
-		<TabPane fx:id="tabpane" prefHeight="602.0" prefWidth="900.0"
-			styleClass="root" tabClosingPolicy="UNAVAILABLE"
-			BorderPane.alignment="CENTER">
+		<TabPane fx:id="tabpane" prefHeight="602.0" prefWidth="900.0" styleClass="root" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
 			<tabs>
 				<Tab fx:id="tabjuegos" text="Juegos">
 					<content>
-						<BorderPane>
+						<BorderPane nodeOrientation="LEFT_TO_RIGHT">
 							<center>
-								<ListView fx:id="gameList"
-									BorderPane.alignment="CENTER" />
+								<ListView fx:id="gameList" BorderPane.alignment="CENTER" />
 							</center>
-							<bottom>
-								<HBox alignment="CENTER" prefHeight="46.0"
-									prefWidth="800.0" spacing="20.0" BorderPane.alignment="CENTER">
-									<children>
-										<Button fx:id="previous" mnemonicParsing="false"
-											onAction="#loadPrevious">
-											<graphic>
-												<ImageView fitHeight="20.0" fitWidth="20.0">
-													<image>
-														<Image url="@Images/ico/arrow-left.png" />
-													</image>
-												</ImageView>
-											</graphic>
-										</Button>
-										<Button fx:id="next" mnemonicParsing="false"
-											onAction="#loadNext">
-											<graphic>
-												<ImageView fitHeight="20.0" fitWidth="20.0">
-													<image>
-														<Image url="@Images/ico/arrow-right.png" />
-													</image>
-												</ImageView>
-											</graphic>
-										</Button>
-									</children>
-								</HBox>
-							</bottom>
 							<top>
-								<BorderPane prefHeight="78.0" prefWidth="900.0"
-									BorderPane.alignment="CENTER">
+								<BorderPane prefHeight="78.0" prefWidth="900.0" BorderPane.alignment="CENTER">
 									<top>
-										<HBox prefHeight="22.0" prefWidth="900.0" spacing="10.0"
-											BorderPane.alignment="CENTER">
+										<HBox prefHeight="22.0" prefWidth="900.0" spacing="10.0" BorderPane.alignment="CENTER">
 											<children>
-												<TextField fx:id="SearchText" prefHeight="25.0"
-													prefWidth="404.0" />
-												<Button fx:id="SearchButton" mnemonicParsing="false"
-													onAction="#OnClickSearch" prefHeight="20.0"
-													prefWidth="20.0">
+												<TextField fx:id="SearchText" prefHeight="25.0" prefWidth="404.0" />
+												<Button fx:id="SearchButton" mnemonicParsing="false" onAction="#OnClickSearch" prefHeight="20.0" prefWidth="20.0">
 													<graphic>
 														<ImageView fitHeight="18.0" fitWidth="18.0">
 															<image>
@@ -83,13 +47,9 @@
 										</HBox>
 									</top>
 									<center>
-										<HBox alignment="CENTER" prefHeight="47.0"
-											prefWidth="800.0" spacing="20.0"
-											BorderPane.alignment="CENTER">
+										<HBox alignment="CENTER" prefHeight="47.0" prefWidth="800.0" spacing="20.0" BorderPane.alignment="CENTER">
 											<children>
-												<Button fx:id="ViewList" mnemonicParsing="false"
-													onAction="#OnClickListView" prefHeight="30.0"
-													prefWidth="30.0">
+												<Button fx:id="ViewList" disable="true" mnemonicParsing="false" onAction="#OnClickListView" prefHeight="30.0" prefWidth="30.0">
 													<graphic>
 														<ImageView fitHeight="30.0" fitWidth="30.0">
 															<image>
@@ -98,9 +58,7 @@
 														</ImageView>
 													</graphic>
 												</Button>
-												<Button fx:id="MosaicView" mnemonicParsing="false"
-													onAction="#OnClickMosaicView" prefHeight="30.0"
-													prefWidth="30.0">
+												<Button fx:id="MosaicView" disable="true" mnemonicParsing="false" onAction="#OnClickMosaicView" prefHeight="30.0" prefWidth="30.0">
 													<graphic>
 														<ImageView fitHeight="30.0" fitWidth="30.0">
 															<image>
@@ -117,41 +75,49 @@
 									</center>
 								</BorderPane>
 							</top>
+                     <bottom>
+                  								<HBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+                  									<children>
+                  										<Button fx:id="previous" mnemonicParsing="false" onAction="#loadPrevious">
+                  											<graphic>
+                  												<ImageView fitHeight="20.0" fitWidth="20.0">
+                  													<image>
+                  														<Image url="@Images/ico/arrow-left.png" />
+                  													</image>
+                  												</ImageView>
+                  											</graphic>
+                  										</Button>
+                  										<Button fx:id="next" mnemonicParsing="false" onAction="#loadNext">
+                  											<graphic>
+                  												<ImageView fitHeight="20.0" fitWidth="20.0">
+                  													<image>
+                  														<Image url="@Images/ico/arrow-right.png" />
+                  													</image>
+                  												</ImageView>
+                  											</graphic>
+                  										</Button>
+                              <Label fx:id="gameQuantity" text="Label">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                  									</children>
+                  								</HBox>
+                     </bottom>
 						</BorderPane>
 					</content>
 				</Tab>
-				<Tab fx:id="tabiblio" text="Biblioteca">
-					<content>
-						<BorderPane prefHeight="200.0" prefWidth="200.0"
-							style="-fx-background-color: #eff0c0;">
-							<center>
-								<ListView prefHeight="200.0" prefWidth="200.0"
-									BorderPane.alignment="CENTER" />
-							</center>
-						</BorderPane>
-					</content>
-				</Tab>
+				<Tab fx:id="tabiblio" text="Biblioteca" />
 			</tabs>
 		</TabPane>
 	</center>
 	<top>
 		<MenuBar fx:id="menu" BorderPane.alignment="CENTER">
 			<menus>
-				<Menu fx:id="Classicmenu" mnemonicParsing="false"
-					text="ClassicGames">
+				<Menu fx:id="Classicmenu" mnemonicParsing="false" text="ClassicGames">
 					<items>
-						<MenuItem fx:id="closemenu" mnemonicParsing="false"
-							text="Close" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="Opciones">
-					<items>
-						<MenuItem mnemonicParsing="false" text="Delete" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="AcercaDe">
-					<items>
-						<MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem fx:id="menuDir" mnemonicParsing="false" onAction="#OnActionDir" text="Directorio" />
+						<MenuItem fx:id="closemenu" mnemonicParsing="false" onAction="#OnActionClose" text="Close" />
 					</items>
 				</Menu>
 			</menus>

@@ -28,21 +28,19 @@ public class ArchiveOrg {
 	}
 
 	public Result getGames(Integer count, String cursor) throws Exception {
-		System.out.println("getGames: count=" + count + ", cursor=" + cursor);
 		Response<Result> response = api.scrape("title,logo,description,year", count, cursor, "softwarelibrary_msdos_games").execute();
 		assertResponse(response);
 		return response.body();
 	}
 
 	public Result searchGames(Integer count, String cursor, String search) throws Exception {
-		System.out.println("searchGames: count=" + count + ", cursor=" + cursor + ", search=" + search);
+
 		Response<Result> response = api.scrape("title,logo,description,year", count, cursor, "collection:(softwarelibrary_msdos_games) AND title:(" + search + ")").execute();
 		assertResponse(response);
 		return response.body();
 	}
 
 	public ItemMetadata getItemMetadata(String id) throws Exception {
-		System.out.println("getItemMetadata: id=" + id);
 		Response<ItemMetadata> response = api.getMetadata(id).execute();
 		assertResponse(response);
 		return response.body();

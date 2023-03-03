@@ -1,16 +1,14 @@
 package dad.controllers;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import dad.classicgames.api.ArchiveOrg;
 import dad.classicgames.api.DownloadGames;
 import dad.classicgames.api.model.Files;
 import dad.classicgames.api.model.Item;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -99,30 +97,23 @@ public class GameListCell extends ListCell<Item> {
 	@FXML
 	void OnClickDownload(ActionEvent event) throws Exception {
 
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setContentText("vas a jugar a" + data.getIdentifier());
-		alert.setHeaderText("Jugar");
-
-		Optional<ButtonType> result = alert.showAndWait();
-
 		download.setGameVars("https://archive.org/download/" + data.getIdentifier() + "/" + getZipName());
-		download.download();
-		download.unzip();
-
+		if (!download.gameDirExist()) {
+			download.download();
+			download.unzip();
+		}
 	}
 
 	@FXML
 	void OnClickPlay(ActionEvent event) {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setContentText("vas a jugar a" + data.getIdentifier());
-		alert.setHeaderText("Jugar");
-		Optional<ButtonType> result = alert.showAndWait();
 		String emuexec;
 		try {
 			emuexec = ArchiveOrg.getInstance().getItemMetadata(data.getIdentifier()).getMetadata().getEmulatorStart();
 			download.setGameVars("https://archive.org/download/" + data.getIdentifier() + "/" + getZipName());
-			download.download();
-			download.unzip();
+			if (!download.gameDirExist()) {
+				download.download();
+				download.unzip();
+			}
 			download.execute(emuexec);
 		} catch (Exception e) {
 			e.printStackTrace();

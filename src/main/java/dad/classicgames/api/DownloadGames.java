@@ -6,12 +6,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import dad.classicgames.emulator.DOSBox;
 import dad.classicgames.emulator.Emulator;
+import javafx.concurrent.Task;
 import javafx.stage.FileChooser;
 import net.lingala.zip4j.ZipFile;
 
@@ -22,6 +19,7 @@ public class DownloadGames {
 	private File gameDir, downloadedFile;
 	private String filename;
 	private URL url;
+	private boolean isdownloaded;
 
 	public boolean gameDirExist() {
 		return gameDir.exists();
@@ -30,39 +28,40 @@ public class DownloadGames {
 	public void setGameVars(String urlString) throws MalformedURLException {
 		url = new URL(urlString);
 		filename = url.getFile();
-		System.out.println(filename);
 		downloadedFile = new File(System.getProperty("java.io.tmpdir"), filename);
 		gameDir = new File(GAMES_DIR, FilenameUtils.getBaseName(downloadedFile.getName()));
 	}
 
 	public void download() throws Exception {
-		if (!gameDir.exists()) {
-			FileUtils.copyURLToFile(url, downloadedFile);
-			System.out.println("Archivo Descargado");
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			public Void call() throws IOException {
+				if (!isdownloaded) {
+					FileUtils.copyURLToFile(url, downloadedFile);
+					isdownloaded = true;
+				}
+				return null;
+			}
+		};
+		new Thread(task).start();
+
 	}
 
 	public void unzip() {
-		if (!gameDir.exists()) {
-			gameDir.mkdirs();
-			ZipFile zipFile = new ZipFile(downloadedFile);
-			try {
-				zipFile.extractAll(gameDir.getAbsolutePath());
-				zipFile.close();
-				System.out.println("archivo Extraido");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 
-		} else {
-			System.out.println("el archivo ya existia");
+		gameDir.mkdirs();
+		ZipFile zipFile = new ZipFile(downloadedFile);
+		try {
+			zipFile.extractAll(gameDir.getAbsolutePath());
+			zipFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
 
 	public void execute(String emuexec) {
 		Emulator emulator = new DOSBox();
-		System.out.println(emuexec);
 		if (emuexec.endsWith(".exe") || emuexec.endsWith(".bat") || emuexec.endsWith(".EXE")
 				|| emuexec.endsWith(".BAT")) {
 			File exeFile = new File(gameDir, emuexec);
@@ -84,7 +83,7 @@ public class DownloadGames {
 			if (chosen != null) {
 				System.out.println(chosen.getName());
 				File exeFile = new File(gameDir, chosen.getName());
-				System.out.println(exeFile);
+
 				try {
 					emulator.run(exeFile).waitFor();
 				} catch (InterruptedException e) {
@@ -104,5 +103,4 @@ public class DownloadGames {
 	public File getDownloadedFile() {
 		return downloadedFile;
 	}
-
 }
